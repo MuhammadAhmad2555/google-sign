@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         .setFilterByAuthorizedAccounts(false)
                         .build())
                 // Automatically sign in when exactly one credential is retrieved.
-                .setAutoSelectEnabled(true)
+                .setAutoSelectEnabled(false)
                 .build();
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(),
@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
                         String username = credential.getId();
                         String password = credential.getPassword();
                         if (idToken !=  null) {
-                            Toast.makeText(MainActivity.this, ""+credential.getId(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, ""+password, Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, ""+username, Toast.LENGTH_LONG).show();
                         }else {
                             Toast.makeText(MainActivity.this, "Google ID token is null", Toast.LENGTH_SHORT).show();
                         }
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnSuccessListener(MainActivity.this, new OnSuccessListener<BeginSignInResult>() {
                             @Override
                             public void onSuccess(BeginSignInResult result) {
-                                Toast.makeText(MainActivity.this, "onSuccess", Toast.LENGTH_SHORT).show();
+
 
                                 IntentSenderRequest intentSenderRequest = new IntentSenderRequest.Builder(result.getPendingIntent().getIntentSender()).build();
                                 activityResultLauncher.launch(intentSenderRequest);
